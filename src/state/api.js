@@ -11,7 +11,7 @@ export const api = createApi({
     // }),
     getProducts: build.query({
       query: () => ({
-        url: "admin/products/",
+        url: "/products/?limit=20&page=4",
         method: "POST",
       }),
       providesTags: ["Products"],

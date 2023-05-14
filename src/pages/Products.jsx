@@ -10,7 +10,7 @@ import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomi
 
 const Products = () => {
   const { data, isLoading } = useGetProductsQuery();
-  const [isTable, setIsTable] = useState(true);
+  const [isTable, setIsTable] = useState(false);
   // const isNonMobile = useMediaQuery("(min-width: 1000px)");
   const theme = useTheme();
   return (
@@ -34,9 +34,9 @@ const Products = () => {
       </Box>
       {data || !isLoading ? (
         isTable ? (
-          <ProductTable product={data} isLoading={isLoading} />
+          <ProductTable product={data.data || []} isLoading={isLoading} />
         ) : (
-          <ProductCard product={data} isLoading={isLoading} />
+          <ProductCard product={data.data || []} isLoading={isLoading} />
         )
       ) : (
         <Box sx={{ display: "flex" }}>
