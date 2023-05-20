@@ -30,7 +30,7 @@ import {
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import FlexBetween from "./FlexBetween";
+import FlexBetween from "../FlexBetween";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const navItems = [

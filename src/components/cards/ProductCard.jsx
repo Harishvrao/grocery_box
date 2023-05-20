@@ -32,22 +32,25 @@ const Product = ({
       sx={{
         backgroundImage: "none",
         backgroundColor: theme.palette.background.alt,
-        borderRadius: "0.55rem",
+        borderRadius: "22px",
         display: "flex",
       }}
+      onClick={(e, v) => console.log(id)}
     >
       <CardMedia
         component="img"
-        sx={{ width: "50%", height: "100%" }}
+        sx={{
+          width: "50%",
+          height: "100%",
+          borderRadius: "22px 12px 12px 22px",
+        }}
         image={images[0]}
         title={name}
         alt={name}
         flex="1"
       />
       <Box flex="1">
-        <CardContent
-          sx={{ width: "91%", height: "100%"}}
-        >
+        <CardContent sx={{ width: "91%", height: "100%" }}>
           <Typography
             sx={{ fontSize: 14 }}
             color={theme.palette.secondary[700]}

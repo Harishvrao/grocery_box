@@ -10,8 +10,8 @@ export const api = createApi({
     //   providesTags: ["User"],
     // }),
     getProducts: build.query({
-      query: () => ({
-        url: "/products/?limit=20&page=4",
+      query: ({ page, limit }) => ({
+        url: `/products/?limit=${limit}&page=${page}`,
         method: "POST",
       }),
       providesTags: ["Products"],

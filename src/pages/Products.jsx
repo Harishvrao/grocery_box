@@ -1,20 +1,34 @@
 import React, { useState } from "react";
-import { Box, Button, useTheme } from "@mui/material";
-import Header from "../components/Header";
+import {
+  Box,
+  Button,
+  Pagination,
+  Slider,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import Header from "../components/commons/Header";
 import { useGetProductsQuery } from "../state/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import ProductTable from "../components/tables/ProductTable";
 import ProductCard from "../components/cards/ProductCard";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
+import ProductPageSlider from "./../components/sliders/ProductPageSlider";
 
 const Products = () => {
-  const { data, isLoading } = useGetProductsQuery();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(8);
   const [isTable, setIsTable] = useState(false);
+
+  const { data, isLoading } = useGetProductsQuery({ page, limit });
   // const isNonMobile = useMediaQuery("(min-width: 1000px)");
   const theme = useTheme();
+
   return (
     <Box m="1.5rem 2.5rem">
+      {/* Header */}
       <Box display="flex" justifyContent="space-between">
         <Header title="PRODUCTS" subtitle="See your list of products." />
         <Button
@@ -32,14 +46,45 @@ const Products = () => {
           {isTable ? "Card View" : "Table View"}
         </Button>
       </Box>
+
+      {/* SINGLE PAGE */}
       {data || !isLoading ? (
         isTable ? (
-          <ProductTable product={data.data || []} isLoading={isLoading} />
+          <ProductTable product={data?.data || []} isLoading={isLoading} />
         ) : (
-          <ProductCard product={data.data || []} isLoading={isLoading} />
+          <>
+            <Box
+              mt="20px"
+              spacing={2}
+              display="flex"
+              justifyContent="space-between"
+            >
+              <Pagination
+                count={data.pagination.total_pages}
+                page={page}
+                onChange={(e, v) => setPage(v)}
+              />
+              <ProductPageSlider limit={limit} setLimit={setLimit} />
+            </Box>
+            <ProductCard product={data?.data || []} isLoading={isLoading} />
+            <Pagination
+              sx={{ m: "20px" }}
+              count={data.pagination.total_pages}
+              page={page}
+              onChange={(e, v) => setPage(v)}
+            />
+          </>
         )
       ) : (
-        <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <CircularProgress />
         </Box>
       )}

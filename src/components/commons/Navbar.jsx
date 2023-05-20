@@ -7,9 +7,9 @@ import {
   SettingsOutlined,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
-import FlexBetween from "./FlexBetween";
+import FlexBetween from "../FlexBetween";
 import { useDispatch } from "react-redux";
-import { setMode } from "../state";
+import { setMode } from "../../state";
 import {
   AppBar,
   Button,
