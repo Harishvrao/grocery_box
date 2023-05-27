@@ -1,32 +1,33 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
-  Collapse,
   Rating,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+// import SingelProduct from "../SingelProduct";
 
-const Product = ({
-  id,
-  name,
-  brand,
-  images,
-  quantity,
-  price,
-  mrp,
-  rating,
-  review,
-}) => {
+const Product = ({ productData }) => {
+  let { id, name, brand, images, quantity, price, mrp, rating, review } =
+    productData;
   const theme = useTheme();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
+  // const [open, setOpen] = useState(false);
 
+  // (
+
+  // <SingelProduct
+  //   open={open}
+  //   setOpen={setOpen}
+  //   product={productData}
+  //   key={id}
+  // />
+  // );
   return (
     <Card
       sx={{
@@ -35,7 +36,7 @@ const Product = ({
         borderRadius: "22px",
         display: "flex",
       }}
-      onClick={(e, v) => console.log(id)}
+      onClick={() => navigate(`/products/${id}`)}
     >
       <CardMedia
         component="img"
@@ -72,37 +73,13 @@ const Product = ({
           <Typography>MRP: {mrp}</Typography>
           <Typography>Quantity: {quantity}</Typography>
           <Rating value={rating} readOnly />
-          {/* <CardActions>
-            <Button
-              variant="primary"
-              size="small"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              See More
-            </Button>
-          </CardActions> */}
-          <Collapse
-            in={isExpanded}
-            timeout="auto"
-            unmountOnExit
-            sx={{
-              color: theme.palette.neutral[300],
-            }}
-          >
-            <CardContent>
-              <Typography>MRP: {mrp}</Typography>
-              <Typography>Quantity: {quantity}</Typography>
-              <Typography>Yearly Sales This Year: {review}</Typography>
-              <Typography>Yearly Units Sold This Year: {review}</Typography>
-            </CardContent>
-          </Collapse>
         </CardContent>
       </Box>
     </Card>
   );
 };
 
-const ProductCard = ({ product, isLoading }) => {
+const ProductCard = ({ products, isLoading }) => {
   const isNonMobile = useMediaQuery("(min-width: 1000px)");
 
   return (
@@ -117,22 +94,9 @@ const ProductCard = ({ product, isLoading }) => {
         "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
       }}
     >
-      {product?.map(
-        ({ id, name, brand, images, quantity, price, mrp, rating, review }) => (
-          <Product
-            key={id}
-            id={id}
-            name={name}
-            brand={brand}
-            images={images}
-            quantity={quantity}
-            price={price}
-            mrp={mrp}
-            rating={rating}
-            review={review}
-          />
-        )
-      )}
+      {products?.map(product => (
+        <Product productData={product} key={product.id} />
+      ))}
     </Box>
   );
 };

@@ -4,11 +4,12 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl:
       process.env["ENVIRONMENT"] === "PROD"
-        ? process.env.PROD_URL
-        : process.env.DEV_URL,
+        ? process.env["PROD_URL"]
+        : "http://localhost:5000/admin",
+    // : process.env["DEV_URL"],
   }),
   reducerPath: "adminApi",
-  tagTypes: ["User", "Products"],
+  tagTypes: ["User", "Products", "ProductById"],
   endpoints: build => ({
     // getUser: build.query({
     //   query: id => `general/user/${id}`,
@@ -21,7 +22,11 @@ export const api = createApi({
       }),
       providesTags: ["Products"],
     }),
+    getProductById: build.query({
+      query: id => `/products/${id}`,
+      providesTags: ["ProductById"],
+    }),
   }),
 });
 
-export const { useGetProductsQuery } = api;
+export const { useGetProductsQuery, useGetProductByIdQuery } = api;

@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Pagination,
-  Slider,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Pagination, useTheme } from "@mui/material";
 import Header from "../components/commons/Header";
 import { useGetProductsQuery } from "../state/api";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -48,9 +40,9 @@ const Products = () => {
       </Box>
 
       {/* SINGLE PAGE */}
-      {data || !isLoading ? (
+      {data && !isLoading ? (
         isTable ? (
-          <ProductTable product={data?.data || []} isLoading={isLoading} />
+          <ProductTable product={data.data || []} isLoading={isLoading} />
         ) : (
           <>
             <Box
@@ -66,7 +58,7 @@ const Products = () => {
               />
               <ProductPageSlider limit={limit} setLimit={setLimit} />
             </Box>
-            <ProductCard product={data?.data || []} isLoading={isLoading} />
+            <ProductCard products={data?.data || []} isLoading={isLoading} />
             <Pagination
               sx={{ m: "20px" }}
               count={data.pagination.total_pages}
@@ -85,7 +77,7 @@ const Products = () => {
             alignItems: "center",
           }}
         >
-          <CircularProgress />
+          <CircularProgress color="secondary" />
         </Box>
       )}
     </Box>
