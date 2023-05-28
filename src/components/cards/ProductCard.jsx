@@ -35,9 +35,11 @@ const Product = ({ productData }) => {
         backgroundColor: theme.palette.background.alt,
         borderRadius: "22px",
         display: "flex",
+        cursor:'pointer'
       }}
       onClick={() => navigate(`/products/${id}`)}
     >
+      
       <CardMedia
         component="img"
         sx={{
